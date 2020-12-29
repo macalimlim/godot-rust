@@ -1,37 +1,31 @@
 use gdnative::prelude::*;
 use gdnative::api::NetworkedMultiplayerENet;
 
+const ADDRESS: &str = "127.0.0.1";
+const PORT: i64 = 9876;
+const IN_BANDWIDTH: i64 = 1000;
+const OUT_BANDWIDTH: i64 = 1000;
+const CLIENT_PORT: i64 = 9877;
+
 #[derive(NativeClass)]
 #[inherit(Node)]
-pub struct ServerPuppet {
-    address: String,
-    port: i64,
-    in_bandwidth: i64,
-    out_bandwidth: i64,
-    client_port: i64,
-}
+pub struct ServerPuppet;
 
 #[methods]
 impl ServerPuppet {
     fn new(_owner: &Node) -> Self {
-        Self {
-            address: String::from("127.0.0.1"),
-            port: 9876,
-            in_bandwidth: 1000,
-            out_bandwidth: 1000,
-            client_port: 9877,
-        }
+        Self
     }
 
     #[export]
     fn _ready(&mut self, owner: TRef<Node>) {
         let peer = NetworkedMultiplayerENet::new();
         peer.create_client(
-            GodotString::from(&self.address),
-            self.port,
-            self.in_bandwidth,
-            self.out_bandwidth,
-            self.client_port,
+            GodotString::from(ADDRESS),
+            PORT,
+            IN_BANDWIDTH,
+            OUT_BANDWIDTH,
+            CLIENT_PORT
         ).unwrap();
 
         if let Some(tree) = owner.get_tree() {

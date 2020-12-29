@@ -1,34 +1,29 @@
 use gdnative::prelude::*;
 use gdnative::api::NetworkedMultiplayerENet;
 
+const PORT: i64 = 9876;
+const MAX_CLIENTS: i64 = 1;
+const IN_BANDWIDTH: i64 = 1000;
+const OUT_BANDWIDTH: i64 = 1000;
+
 #[derive(NativeClass)]
 #[inherit(Node)]
-pub struct Server {
-    port: i64,
-    max_clients: i64,
-    in_bandwidth: i64,
-    out_bandwidth: i64,
-}
+pub struct Server;
 
 #[methods]
 impl Server {
     fn new(_owner: &Node) -> Self {
-        Self {
-            port: 9876,
-            max_clients: 1,
-            in_bandwidth: 1000,
-            out_bandwidth: 1000,
-        }
+        Self
     }
 
     #[export]
     fn _ready(&mut self, owner: &Node) {
         let peer = NetworkedMultiplayerENet::new();
         peer.create_server(
-            self.port,
-            self.max_clients,
-            self.in_bandwidth,
-            self.out_bandwidth,
+            PORT,
+            MAX_CLIENTS,
+            IN_BANDWIDTH,
+            OUT_BANDWIDTH
         ).unwrap();
 
         if let Some(tree) = owner.get_tree() {
@@ -43,4 +38,3 @@ impl Server {
         owner.rpc(GodotString::from_str("return_greeting"), &[Variant::from_str("hello")]);
     }
 }
-
