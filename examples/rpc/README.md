@@ -1,15 +1,11 @@
 # RPC Demo
 
-A very simple example to show peer to peer communication with Godot's high level 
-
-multiplayer API calls.
+A very simple example to show peer to peer communication with Godot's high level multiplayer API calls.
 
 
 ## Setup
 
-1. Build the library:
-
-    `cargo build`
+1. Build the library with `cargo build`.
 
 2. Import the Godot project in the Godot editor.
 
@@ -17,11 +13,7 @@ multiplayer API calls.
 
 4. Start a second instance of the Godot editor.
 
-5. In the `Remote Port` in the Debug settings of the editor (e.g. 6012).
-
-    The two editor instances need to have different debug ports so that they can
-    
-    connect to their own running scenes. Needed to show the godot print messages.
+5. Set a separate "Remote Port" for the second editor (e.g. 6012). The two editor instances need to have different debug ports so that they can connect to their own running scenes. Needed to show the godot print messages.
 
     `Editor > Editor Settings > Network > Debug`
 
