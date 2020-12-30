@@ -26,15 +26,23 @@ impl Server {
             OUT_BANDWIDTH
         ).unwrap();
 
-        if let Some(tree) = owner.get_tree() {
-            let tree = unsafe { tree.assume_safe() };
-            tree.set_network_peer(peer);
-        };
+        let tree = owner.get_tree().expect("could not retreive Scene Tree");
+        let tree = unsafe { tree.assume_safe() };
+
+        tree.set_network_peer(peer);
     }
 
     #[export(rpc = "master")]
     fn greet_server(&mut self, owner: &Node, msg: GodotString) {
         godot_print!("Client says: {}", msg);
-        owner.rpc(GodotString::from_str("return_greeting"), &[Variant::from_str("hello")]);
+
+        let tree = owner.get_tree().expect("could not retreive Scene Tree");
+        let tree = unsafe { tree.assume_safe() };
+
+        owner.rpc_id(
+            tree.get_rpc_sender_id(),
+            "return_greeting",
+            &[Variant::from_str("hello")]
+        );
     }
 }

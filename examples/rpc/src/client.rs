@@ -28,22 +28,21 @@ impl ServerPuppet {
             CLIENT_PORT
         ).unwrap();
 
-        if let Some(tree) = owner.get_tree() {
-            let tree = unsafe { tree.assume_safe() };
-            tree.set_network_peer(peer);
-            tree.connect(
-                "connected_to_server",
-                owner,
-                "on_connected_to_server",
-                VariantArray::new_shared(),
-                0
-            ).unwrap();
-        };
+        let tree = owner.get_tree().expect("could not retreive SceneTree");
+        let tree = unsafe { tree.assume_safe() };
+
+        tree.connect(
+            "connected_to_server",
+            owner,
+            "on_connected_to_server",
+            VariantArray::new_shared(),
+            0
+        ).unwrap();
     }
 
     #[export]
     fn on_connected_to_server(&mut self, owner: TRef<Node>) {
-        owner.rpc_id(1, GodotString::from_str("greet_server"), &[Variant::from_str("hello")]);
+        owner.rpc("greet_server", &[Variant::from_str("hello")]);
     }
 
     #[export(rpc = "puppet")]

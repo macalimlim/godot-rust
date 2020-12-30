@@ -1,5 +1,5 @@
 [package]
-name = "client_server"
+name = "rpc"
 version = "0.1.0"
 authors = ["The godot-rust developers"]
 publish = false

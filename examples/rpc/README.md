@@ -1,6 +1,8 @@
-# Client Server Demo
+# RPC Demo
 
-A very simple example to show peer to peer communication with rpc calls.
+A very simple example to show peer to peer communication with Godot's high level 
+
+multiplayer API calls.
 
 
 ## Setup
@@ -17,7 +19,11 @@ A very simple example to show peer to peer communication with rpc calls.
 
 5. In the `Remote Port` in the Debug settings of the editor (e.g. 6012).
 
-    Editor > Editor Settings > Network > Debug
+    The two editor instances need to have different debug ports so that they can
+    
+    connect to their own running scenes. Needed to show the godot print messages.
+
+    `Editor > Editor Settings > Network > Debug`
 
 5. Open the `Client.tscn` scene and start the current scene with `F6`
 
